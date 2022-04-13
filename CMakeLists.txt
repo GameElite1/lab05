@@ -3,24 +3,18 @@ cmake_minimum_required(VERSION 3.4)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-option(BUILD_TESTS "Build tests" ON)
-project(banking)
+project(lab05)
 
-add_library(${PROJECT_NAME} STATIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/banking/Account.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/banking/Transaction.cpp
-        )
+include_directories(banking)
+add_subdirectory(banking banking)
 
-target_include_directories(${PROJECT_NAME} PUBLIC
-        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
-        )
+option(BUILD_TESTS "Build tests" OFF)
 
-if (BUILD_TESTS)
+if(BUILD_TESTS)
     enable_testing()
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/third-party/gtest)
-    add_executable(tests
-            ${CMAKE_CURRENT_SOURCE_DIR}/test.cpp)
-    target_link_libraries(tests ${PROJECT_NAME} gtest_main gmock_main)
-    add_test(NAME tests COMMAND test)
+    add_subdirectory(third-party/gtest)
+    add_executable(check tests/bank_test.cpp)
+    target_compile_options(check PRIVATE --coverage)
+    target_link_libraries(check banking gtest_main gmock_main --coverage)
+    add_test(NAME check COMMAND check)
 endif()
-
