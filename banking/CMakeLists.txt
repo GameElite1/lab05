@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.4)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -6,11 +6,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 project(banking)
 
 add_library(${PROJECT_NAME} STATIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/banking/Account.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/banking/Transaction.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Account.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Transaction.cpp
         )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
-        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
-        "$<INSTALL_INTERFACE:include>"
+        ${CMAKE_CURRENT_SOURCE_DIR}
         )
