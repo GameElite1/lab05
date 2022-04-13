@@ -12,7 +12,7 @@ add_library(${PROJECT_NAME} STATIC
         )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}
+        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
         )
 
 if (BUILD_TESTS)
@@ -21,5 +21,6 @@ if (BUILD_TESTS)
     add_executable(tests
             ${CMAKE_CURRENT_SOURCE_DIR}/test.cpp)
     target_link_libraries(tests ${PROJECT_NAME} gtest_main gmock_main)
-    add_test(NAME unit_tests COMMAND tests)
+    add_test(NAME tests COMMAND test)
 endif()
+
